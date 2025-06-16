@@ -1,0 +1,20 @@
+﻿@model Role_Based_Invitation.Models.Invite
+
+<h2>Invitation</h2>
+
+<p>You have been invited by an administrator.</p>
+<form method="post" asp-action="HandleInviteResponse">
+    <input type="hidden" name="inviteId" value="@Model.Id" />
+    <div>
+        <label>Email</label>
+        <input type="email" value="@Model.ReceiverEmail" disabled />
+    </div>
+
+    <div>
+        <label>Create Password</label>
+        <input type="password" name="password" required />
+    </div>
+
+    <button type="submit" name="response" value="Accept">Accept</button>
+    <button type="submit" name="response" value="Decline">Decline</button>
+</form>

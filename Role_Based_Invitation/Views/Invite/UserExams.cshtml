@@ -1,0 +1,20 @@
+﻿<h2>Available Practical Examinations</h2>
+@model List<PractExam>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var exam in Model)
+        {
+            <li>
+                <strong>@exam.Title</strong><br />
+                <em>@exam.Description</em><br />
+                Scheduled On: @exam.Date.ToShortDateString()
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No examinations available at the moment.</p>
+}
