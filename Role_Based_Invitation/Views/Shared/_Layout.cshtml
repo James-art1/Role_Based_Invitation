@@ -12,8 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top me-2" />
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Account" asp-action="Login">
                     Role_Based_Invitation
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,9 +23,6 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
@@ -39,21 +35,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-light py-3 mt-5">
-        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <div class="mb-2 mb-md-0">
-                <span class="fw-semibold">&copy; 2025 Role_Based_Invitation</span>
-                <span class="mx-2">|</span>
-                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-dark">Privacy Policy</a>
-            </div>
-            <div>
-                <span>Follow us:</span>
-                <a href="#" class="ms-2 text-dark"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="ms-2 text-dark"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="ms-2 text-dark"><i class="bi bi-linkedin"></i></a>
-            </div>
-        </div>
-    </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>

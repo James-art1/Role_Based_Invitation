@@ -1,6 +1,35 @@
-﻿@{
+﻿@model IEnumerable<Role_Based_Invitation.Models.PractExam>
+@{
     ViewData["Title"] = "Welcome";
 }
 
 <h2>Welcome!</h2>
 <p>You are part of the organization: <strong>@ViewBag.Organization</strong></p>
+
+@if (!Model.Any())
+{
+    <p class="text-muted mt-3">There are no exams scheduled for your organization yet.</p>
+}
+else
+{
+    <h4 class="mt-4">Upcoming Practical Examinations</h4>
+    <table class="table table-bordered table-striped mt-2">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exam in Model)
+            {
+                <tr>
+                    <td>@exam.Title</td>
+                    <td>@exam.Description</td>
+                    <td>@exam.Date.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

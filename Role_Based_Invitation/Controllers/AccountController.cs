@@ -30,7 +30,7 @@ namespace Role_Based_Invitation.Controllers
                 Username = username,
                 Email = email,
                 PasswordHash = _auth.HashPassword(password),
-                Role = "Admin",
+                Role = Role.Admin,
                 OrganizationName = organizationName
             };
 
@@ -38,9 +38,9 @@ namespace Role_Based_Invitation.Controllers
             _db.SaveChanges();
 
             HttpContext.Session.SetInt32("UserId", user.Id);
-            HttpContext.Session.SetString("Role", user.Role);
+            HttpContext.Session.SetString("Role", user.Role.ToString());
 
-            return RedirectToAction("Invite", "Invite");
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: /Account/Login
@@ -54,8 +54,8 @@ namespace Role_Based_Invitation.Controllers
             if (user == null) return Unauthorized();
 
             HttpContext.Session.SetInt32("UserId", user.Id);
-            HttpContext.Session.SetString("Role", user.Role);
-            return user.Role == "Admin"
+            HttpContext.Session.SetString("Role", user.Role.ToString());
+            return user.Role == Role.Admin
                 ? RedirectToAction("ManageUsers", "Invite")
                 : RedirectToAction("Welcome", "Invite");
 

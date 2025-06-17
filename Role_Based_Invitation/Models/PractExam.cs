@@ -8,6 +8,7 @@
         public DateTime Date { get; set; }
 
         public int CreatedByAdminId { get; set; }
+
     }
 
 }

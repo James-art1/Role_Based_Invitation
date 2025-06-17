@@ -12,8 +12,8 @@ using Role_Based_Invitation.Data;
 namespace Role_Based_Invitation.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250616110257_invitation")]
-    partial class invitation
+    [Migration("20250617073527_inital")]
+    partial class inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,22 +33,32 @@ namespace Role_Based_Invitation.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("GeneratedPassword")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InvitationToken")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("InviterId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReceiverEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int?>("ReceiverId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -83,8 +93,6 @@ namespace Role_Based_Invitation.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedByAdminId");
-
                     b.ToTable("PracticalExaminations");
                 });
 
@@ -108,10 +116,11 @@ namespace Role_Based_Invitation.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -135,17 +144,6 @@ namespace Role_Based_Invitation.Migrations
                     b.Navigation("Inviter");
 
                     b.Navigation("Receiver");
-                });
-
-            modelBuilder.Entity("Role_Based_Invitation.Models.PractExam", b =>
-                {
-                    b.HasOne("Role_Based_Invitation.Models.User", "CreatedByAdmin")
-                        .WithMany()
-                        .HasForeignKey("CreatedByAdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByAdmin");
                 });
 
             modelBuilder.Entity("Role_Based_Invitation.Models.User", b =>

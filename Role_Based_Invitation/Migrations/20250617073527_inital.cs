@@ -6,21 +6,37 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Role_Based_Invitation.Migrations
 {
     /// <inheritdoc />
-    public partial class invitation : Migration
+    public partial class inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "PracticalExaminations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedByAdminId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PracticalExaminations", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false),
                     OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -36,9 +52,11 @@ namespace Role_Based_Invitation.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InviterId = table.Column<int>(type: "int", nullable: false),
                     ReceiverId = table.Column<int>(type: "int", nullable: true),
-                    ReceiverEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GeneratedPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ReceiverEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    InvitationToken = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,28 +75,6 @@ namespace Role_Based_Invitation.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PracticalExaminations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByAdminId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PracticalExaminations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PracticalExaminations_Users_CreatedByAdminId",
-                        column: x => x.CreatedByAdminId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Invites_InviterId",
                 table: "Invites",
@@ -88,11 +84,6 @@ namespace Role_Based_Invitation.Migrations
                 name: "IX_Invites_ReceiverId",
                 table: "Invites",
                 column: "ReceiverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PracticalExaminations_CreatedByAdminId",
-                table: "PracticalExaminations",
-                column: "CreatedByAdminId");
         }
 
         /// <inheritdoc />

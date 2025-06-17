@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Role_Based_Invitation.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -37,5 +38,6 @@ namespace Role_Based_Invite.Services
 
             await smtpClient.SendMailAsync(mailMessage);
         }
+
     }
 }
